@@ -37,7 +37,7 @@ namespace PicPayChallange.API.Migrations
                     b.Property<Guid>("PayerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("Timestamp")
+                    b.Property<DateTime>("TransactionTime")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
@@ -54,6 +54,9 @@ namespace PicPayChallange.API.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Balance")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("CPF")
                         .IsRequired()
@@ -83,29 +86,6 @@ namespace PicPayChallange.API.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("PicPayChallange.API.Models.WalletModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("wallets", (string)null);
-                });
-
             modelBuilder.Entity("PicPayChallange.API.Models.TransactionModel", b =>
                 {
                     b.HasOne("PicPayChallange.API.Models.UserModel", "Payee")
@@ -123,23 +103,6 @@ namespace PicPayChallange.API.Migrations
                     b.Navigation("Payee");
 
                     b.Navigation("Payer");
-                });
-
-            modelBuilder.Entity("PicPayChallange.API.Models.WalletModel", b =>
-                {
-                    b.HasOne("PicPayChallange.API.Models.UserModel", "User")
-                        .WithOne("Wallet")
-                        .HasForeignKey("PicPayChallange.API.Models.WalletModel", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("PicPayChallange.API.Models.UserModel", b =>
-                {
-                    b.Navigation("Wallet")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

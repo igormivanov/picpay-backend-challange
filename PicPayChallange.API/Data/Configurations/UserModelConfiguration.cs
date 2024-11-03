@@ -8,14 +8,12 @@ namespace PicPayChallange.API.Data.Configurations {
             
             builder.ToTable("users");
 
-            builder.HasKey(x => x.Id);
-            builder.HasIndex(w => new { w.Email, w.CPF }).IsUnique();
+            builder.HasKey(u => u.Id);
+            builder.HasIndex(u => new { u.Email, u.CPF }).IsUnique();
             builder.Property(u => u.UserType).HasConversion<string>();
 
-            builder.HasOne(u => u.Wallet)
-                .WithOne(w => w.User)
-                .HasForeignKey<WalletModel>(w => w.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.Property(u => u.Balance)
+                .HasColumnType("decimal(18,2)");
         }
     }
 }
