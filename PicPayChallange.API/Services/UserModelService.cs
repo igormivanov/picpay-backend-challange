@@ -13,8 +13,7 @@ namespace PicPayChallange.API.Services {
             _userModelRepository = userModelRepository;
         }
 
-        public async Task CreateUser(UserModelRequestDTO user) { 
-           
+        public async Task<Result<bool>> CreateUser(UserModelRequestDTO user) { 
 
             var userModel = new UserModel {
                 Id = Guid.NewGuid(),
@@ -27,6 +26,8 @@ namespace PicPayChallange.API.Services {
             };
 
             await _userModelRepository.Create(userModel);
+
+            return Result<bool>.Success(true);
         }
     }
 }

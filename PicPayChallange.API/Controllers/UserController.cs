@@ -14,15 +14,16 @@ namespace PicPayChallange.API.Controllers {
             _userModelService = userModelService;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] UserModelRequestDTO userRequestDTO) {
 
-            try {
-                await _userModelService.CreateUser(userRequestDTO);
-                return Ok();
-            } catch (Exception ex) {
-                return BadRequest(ex.Message); 
+            var result = await _userModelService.CreateUser(userRequestDTO);
+
+            if(!result.IsSuccess) {
+                return BadRequest(result);
             }
+
+            return Created();
         }
     }
 }

@@ -1,5 +1,8 @@
-﻿using PicPayChallange.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using PicPayChallange.API.Data;
 using PicPayChallange.API.Models;
+using System.Data;
 
 namespace PicPayChallange.API.Repositories {
     public class UserModelRepository : IUserModelRepository {
@@ -13,10 +16,14 @@ namespace PicPayChallange.API.Repositories {
             await _context.SaveChangesAsync();
         }
 
-        public async Task<UserModel> findById(Guid id) {
+        public async Task<UserModel> FindById(Guid id) {
             var user = await _context.Users.FindAsync(id);
             return user;
 
+        }
+
+        public async Task Update(UserModel user) {
+            _context.Update(user);
         }
     }
 }

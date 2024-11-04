@@ -5,6 +5,7 @@ namespace PicPayChallange.API.Repositories {
 
         Task Create(UserModel user);
 
-        Task<UserModel> findById(Guid id);
+        Task<UserModel> FindById(Guid id);
+        Task Update(UserModel user);
     }
 }
